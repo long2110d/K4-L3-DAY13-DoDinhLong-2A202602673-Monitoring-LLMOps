@@ -1,0 +1,108 @@
+﻿{
+    "source":  "data/logs.jsonl",
+    "first_timestamp":  "2026-09-30T03:58:37.544212Z",
+    "last_timestamp":  "2026-09-30T13:20:27.826142Z",
+    "records":  187,
+    "requests":  86,
+    "responses":  86,
+    "failed":  0,
+    "over_3000ms":  1,
+    "retrieval_success":  86,
+    "percentile_method":  "linear interpolation: (n-1)*0.95",
+    "latency_ms_p95":  2651.75,
+    "ttft_ms_p95":  50,
+    "cost_usd_sum":  0.17283900000000005,
+    "tokens_in_sum":  2948,
+    "tokens_out_sum":  10933,
+    "quality_score_mean":  0.87790697674418572,
+    "incident_records":  [
+                             {
+                                 "ts":  "2026-09-30T13:20:14.187030Z",
+                                 "event":  "incident_enabled",
+                                 "correlation_id":  "req-ea2835de",
+                                 "latency_ms":  null,
+                                 "ttft_ms":  null,
+                                 "tool_success":  null
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:14.541161Z",
+                                 "event":  "request_received",
+                                 "correlation_id":  "req-739af9f6",
+                                 "latency_ms":  null,
+                                 "ttft_ms":  null,
+                                 "tool_success":  null
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:17.196980Z",
+                                 "event":  "response_sent",
+                                 "correlation_id":  "req-739af9f6",
+                                 "latency_ms":  2654,
+                                 "ttft_ms":  52,
+                                 "tool_success":  true
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:17.201026Z",
+                                 "event":  "request_received",
+                                 "correlation_id":  "req-7fc3b395",
+                                 "latency_ms":  null,
+                                 "ttft_ms":  null,
+                                 "tool_success":  null
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:19.853830Z",
+                                 "event":  "response_sent",
+                                 "correlation_id":  "req-7fc3b395",
+                                 "latency_ms":  2651,
+                                 "ttft_ms":  50,
+                                 "tool_success":  true
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:19.855836Z",
+                                 "event":  "request_received",
+                                 "correlation_id":  "req-e571948a",
+                                 "latency_ms":  null,
+                                 "ttft_ms":  null,
+                                 "tool_success":  null
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:22.510674Z",
+                                 "event":  "response_sent",
+                                 "correlation_id":  "req-e571948a",
+                                 "latency_ms":  2653,
+                                 "ttft_ms":  50,
+                                 "tool_success":  true
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:22.514889Z",
+                                 "event":  "request_received",
+                                 "correlation_id":  "req-bca619d8",
+                                 "latency_ms":  null,
+                                 "ttft_ms":  null,
+                                 "tool_success":  null
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:25.167688Z",
+                                 "event":  "response_sent",
+                                 "correlation_id":  "req-bca619d8",
+                                 "latency_ms":  2652,
+                                 "ttft_ms":  50,
+                                 "tool_success":  true
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:25.171469Z",
+                                 "event":  "request_received",
+                                 "correlation_id":  "req-d343d653",
+                                 "latency_ms":  null,
+                                 "ttft_ms":  null,
+                                 "tool_success":  null
+                             },
+                             {
+                                 "ts":  "2026-09-30T13:20:27.826142Z",
+                                 "event":  "response_sent",
+                                 "correlation_id":  "req-d343d653",
+                                 "latency_ms":  2652,
+                                 "ttft_ms":  50,
+                                 "tool_success":  true
+                             }
+                         ]
+}
