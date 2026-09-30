@@ -20,3 +20,21 @@ def test_scrub_common_vietnamese_phone_formats() -> None:
         out = scrub_text(f"Contact: {phone_number}")
         assert phone_number not in out
         assert "REDACTED_PHONE_VN" in out
+
+
+def test_scrub_passport_number() -> None:
+    out = scrub_text("Passport: B1234567")
+    assert "B1234567" not in out
+    assert "REDACTED_PASSPORT" in out
+
+
+def test_scrub_vietnamese_address_label() -> None:
+    out = scrub_text("Địa chỉ: 12 Nguyễn Trãi, Quận 1, TP.HCM")
+    assert "Nguyễn Trãi" not in out
+    assert "REDACTED_ADDRESS_VN" in out
+
+
+def test_scrub_labeled_date_of_birth() -> None:
+    out = scrub_text("Ngày sinh: 01/02/2000")
+    assert "01/02/2000" not in out
+    assert "REDACTED_DATE_OF_BIRTH" in out

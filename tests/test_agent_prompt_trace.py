@@ -20,12 +20,27 @@ class RecordingLangfuseClient:
     def __init__(self) -> None:
         self.prompt = ManagedPrompt()
         self.span_updates: list[dict] = []
+        self.observations: list[tuple[dict, "RecordingObservation"]] = []
 
     def get_prompt(self, name: str, **kwargs):
         return self.prompt
 
     def update_current_span(self, **kwargs) -> None:
         self.span_updates.append(kwargs)
+
+    @contextmanager
+    def start_as_current_observation(self, **kwargs):
+        observation = RecordingObservation()
+        self.observations.append((kwargs, observation))
+        yield observation
+
+
+class RecordingObservation:
+    def __init__(self) -> None:
+        self.updates: list[dict] = []
+
+    def update(self, **kwargs) -> None:
+        self.updates.append(kwargs)
 
 
 def test_agent_records_prompt_version_with_v4_observation_api(monkeypatch) -> None:
@@ -45,7 +60,7 @@ def test_agent_records_prompt_version_with_v4_observation_api(monkeypatch) -> No
     monkeypatch.setattr(agent_module, "propagate_attributes", record_attributes)
 
     agent = agent_module.LabAgent()
-    agent_module.LabAgent.run.__wrapped__(
+    result = agent_module.LabAgent.run.__wrapped__(
         agent,
         user_id="student-01",
         feature="qa",
@@ -67,3 +82,24 @@ def test_agent_records_prompt_version_with_v4_observation_api(monkeypatch) -> No
     assert span_update["version"] == "3"
     assert propagated[0]["metadata"]["correlation_id"] == "req-12345678"
     assert propagated[-1]["prompt"] is client.prompt
+
+    retrieval_args, retrieval = client.observations[0]
+    assert retrieval_args["name"] == "retrieval"
+    assert retrieval_args["as_type"] == "retriever"
+    assert "input" not in retrieval_args
+    assert retrieval.updates[-1]["output"]["document_count"] == 1
+
+    generation_args, generation = client.observations[1]
+    assert generation_args["name"] == "generation"
+    assert generation_args["as_type"] == "generation"
+    assert generation_args["model"] == agent.model
+    assert generation_args["prompt"] is client.prompt
+    assert "input" not in generation_args
+    generation_update = generation.updates[-1]
+    assert "output" not in generation_update
+    assert generation_update["usage_details"]["input"] > 0
+    assert generation_update["usage_details"]["output"] > 0
+    assert generation_update["usage_details"]["total"] == (
+        result.tokens_in + result.tokens_out
+    )
+    assert generation_update["cost_details"]["total"] == result.cost_usd
